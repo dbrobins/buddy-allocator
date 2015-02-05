@@ -216,5 +216,15 @@ TEST_F(AllocTest, SmartPtr)
 	EXPECT_EQ(0, m_alloc.CbUsed());
 }
 
+TEST_F(AllocTest, FirstAndWrong)
+{
+	auto pv1 = m_alloc.PvAlloc(32);
+	auto pv2 = m_alloc.PtAlloc<uint8_t>(32);
+	m_alloc.FreePv(pv1);
+	auto pv3 = m_alloc.PtAlloc<uint8_t>(64);
+	EXPECT_NE(pv1, pv3.get());
+	EXPECT_GT(pv3.get(), pv2.get());
+}
+
 #endif
 

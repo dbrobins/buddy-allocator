@@ -79,7 +79,7 @@ void *Allocator<Tcb2Min, Tcb2Heap>::PvAlloc(size_t cb)
 			++iblk;
 			break;
 		case 0b01:  // end of free block; accept if better
-			if (cblkMin == 0 || (cblkMin > (iblk - iblkStart + 1) && cblkMin >= cblkReq))
+			if (iblk - iblkStart + 1 >= cblkReq && (cblkMin == 0 || cblkMin > (iblk - iblkStart + 1)))
 			{
 				cblkMin = iblk - iblkStart + 1;
 				iblkMin = iblkStart;
